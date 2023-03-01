@@ -13,6 +13,7 @@ yarn-error.log*
 lerna-debug.log*
 /eslint.xml
 
+/data
 # OS
 .DS_Store
 .env

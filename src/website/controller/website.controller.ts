@@ -46,8 +46,8 @@ export class WebsiteController {
   })
   async crawl(
       @Body() crawlRequestBody: CrawlRequestDto
-  ) {
-    await this.websiteService.crawl(crawlRequestBody)
+  ):Promise<CrawlResponseDto> {
+    return await this.websiteService.crawl(crawlRequestBody)
   }
 
   @ApiOperation({

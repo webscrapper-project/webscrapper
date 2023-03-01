@@ -16,11 +16,7 @@ export class HttpClient {
     this.axiosInstance = axios.create();
 
     this.axiosInstance.interceptors.response.use(
-      undefined,
-      function (error: AxiosError) {
-        console.log('--------------AXIOS ERROR START---------------------');
-        console.log('--------------AXIOS ERROR END---------------------');
-      },
+      undefined
     );
   }
 
