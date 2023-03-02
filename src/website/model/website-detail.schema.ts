@@ -7,7 +7,22 @@ import {Document} from "mongoose";
 })
 export class WebsiteDetail extends BaseSchema {
     @Prop()
-    websiteId: string;
+    url: string;
+
+    @Prop()
+    title: string;
+
+    @Prop()
+    favicon: string;
+
+    @Prop()
+    imageUrls: string[];
+
+    @Prop()
+    stylesheetUrls: string[];
+
+    @Prop()
+    metadataDescriptions: string[];
 }
 
 export const WebsiteDetailSchema = SchemaFactory.createForClass(WebsiteDetail);

@@ -4,6 +4,7 @@ import {WebsiteModule} from "./website/website.module";
 import {MongooseModule} from "@nestjs/mongoose";
 import {BullModule} from "@nestjs/bull";
 import { JobModule } from './job/job.module';
+import { MinerModule } from './miner/miner.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { JobModule } from './job/job.module';
           inject: [ConfigService],
       }),
       WebsiteModule,
-      JobModule
+      JobModule,
+      MinerModule
   ],
   controllers: [],
   providers: [],

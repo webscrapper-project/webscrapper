@@ -35,7 +35,7 @@ export class JobService {
 
     const job = await this.jobModel.findOne({url: crawlRequestBody.url}).exec();
 
-    if (job){
+    if (job && job.status){
       throw new WebsiteAlreadyExist();
     }
 
@@ -57,12 +57,13 @@ export class JobService {
 
   async getWebsiteStatus(id): Promise<JobResponseDto> {
     const job = await this.jobModel.findOne({id}).exec();
-
     return jobSchemaToJobDtoMapper(job);
   }
 
   async cancelWebsiteCrawlJob(id) {
     await this.jobModel.updateOne({id},{$set: {status: false}});
+    const job = await this.websiteCrawlerQueue.getJob(id);
+    await job.remove();
   }
 
   async createJob({ url }:CrawlRequestDto){

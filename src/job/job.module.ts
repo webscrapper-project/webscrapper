@@ -8,6 +8,7 @@ import {JobController} from "./controller/job.controller";
 import {WebsiteCrawlerProcessor} from "./processor/website-crawler.processor";
 import {MongooseModule} from "@nestjs/mongoose";
 import {JobSchema} from "./model/job.schema";
+import {MinerModule} from "../miner/miner.module";
 
 @Module({
     imports: [
@@ -21,7 +22,8 @@ import {JobSchema} from "./model/job.schema";
             },
         ]),
         ScheduleModule.forRoot(),
-        WebsiteModule
+        WebsiteModule,
+        MinerModule
     ],
     controllers: [JobController],
     providers: [JobService,WebsiteCrawlerProcessor],
