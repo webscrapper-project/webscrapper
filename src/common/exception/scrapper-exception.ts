@@ -8,6 +8,8 @@ export interface IError {
 
 export const errors: { [key: string]: IError } = {
   UrlNotCorrect: { code: 400, message: 'url_not_correct', log: false },
+  WebsiteAlreadyExist: { code: 400, message: 'website_already_exist', log: false },
+
 };
 
 export class ScrapperException extends HttpException {
@@ -25,5 +27,11 @@ export class ScrapperException extends HttpException {
 export class UrlNotCorrectException extends ScrapperException {
   constructor() {
     super('UrlNotCorrect');
+  }
+}
+
+export class WebsiteAlreadyExist extends ScrapperException {
+  constructor() {
+    super('WebsiteAlreadyExist');
   }
 }

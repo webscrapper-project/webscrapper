@@ -3,9 +3,9 @@ import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
 import {Document} from "mongoose";
 
 @Schema({
-    collection: 'website',
+    collection: 'job',
 })
-export class Website extends BaseSchema {
+export class Job extends BaseSchema {
     @Prop({
         type: "string",
         required: true,
@@ -19,7 +19,7 @@ export class Website extends BaseSchema {
     status: boolean;
 }
 
-export const WebsiteSchema = SchemaFactory.createForClass(Website);
+export const JobSchema = SchemaFactory.createForClass(Job);
 
-export type WebsiteDocument = Website & Document;
+export type JobDocument = Job & Document;
 

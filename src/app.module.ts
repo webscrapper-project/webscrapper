@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {WebsiteModule} from "./website/website.module";
 import {MongooseModule} from "@nestjs/mongoose";
+import {BullModule} from "@nestjs/bull";
+import { JobModule } from './job/job.module';
 
 @Module({
   imports: [
@@ -17,7 +19,18 @@ import {MongooseModule} from "@nestjs/mongoose";
               )}`,
           }),
       }),
-      WebsiteModule
+      BullModule.forRootAsync({
+          imports: [ConfigModule],
+          useFactory: async (configService: ConfigService) => ({
+              redis: {
+                  host: configService.get('QUEUE_HOST'),
+                  port: +configService.get('QUEUE_PORT'),
+              },
+          }),
+          inject: [ConfigService],
+      }),
+      WebsiteModule,
+      JobModule
   ],
   controllers: [],
   providers: [],
