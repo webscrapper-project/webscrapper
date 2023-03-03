@@ -1,0 +1,24 @@
+FROM node:16-bullseye
+
+# Set this to the group ID of the `docker` group of the host system
+ARG DOCKER_GID=121
+
+RUN groupadd -g ${DOCKER_GID} docker \
+  && apt-get update \
+  && apt-get -y install sudo \
+  && apt-get -y install postgresql postgresql-contrib \
+  && pg_ctlcluster 13 main start \
+  && apt-get -y install docker.io \
+  && apt-get -q autoremove \
+  && apt-get -q clean -y \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin \
+  && usermod -aG docker node
+
+RUN echo 'node ALL=NOPASSWD: /usr/bin/pg_ctlcluster' >> \
+  /etc/sudoers
+RUN echo 'node ALL=(postgres) NOPASSWD: /usr/bin/psql' >> \
+  /etc/sudoers
+
+COPY pg_starter.sh /tmp/pg_starter.sh
+
+ENTRYPOINT ["sh", "/tmp/pg_starter.sh"]
