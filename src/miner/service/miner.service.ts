@@ -26,6 +26,7 @@ export class MinerService {
             .setImageUrls()
             .setStylesheetUrls()
             .setMetadataDescription()
+            .setCountries()
 
         await this.websiteService.create(website);
     }

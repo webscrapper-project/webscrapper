@@ -20,10 +20,10 @@ export class WebsiteCrawlerProcessor {
         await this.minerService.getAndSaveData(job.data.url);
     }
 
-    // @Cron(CronExpression.EVERY_5_SECONDS, {
-    //     name: "validation",
-    //     timeZone: "UTC",
-    // })
+    @Cron(CronExpression.EVERY_5_SECONDS, {
+        name: "validation",
+        timeZone: "UTC",
+    })
     async validateSchedule(){
         const jobs = await this.jobService.getActiveJobs()
         for (const job of jobs) {

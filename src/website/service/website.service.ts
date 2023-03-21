@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {Website} from "../../miner/model/Website";
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
-import {WebsiteDetailDocument} from "../model/website-detail.schema";
+import {IOther, WebsiteDetailDocument} from "../model/website-detail.schema";
 
 @Injectable()
 export class WebsiteService {
@@ -22,7 +22,14 @@ export class WebsiteService {
         favicon: website.favicon,
         imageUrls: website.imageUrls,
         stylesheetUrls: website.stylesheetUrls,
-        metadataDescriptions: website.metaDataDescriptions
+        metadataDescriptions: website.metaDataDescriptions,
+        countries: website.activeCountries,
+        others: {
+          International_Showtimes_Territories: {
+            active: website.activeCountries,
+            comingSoon: website.comingSoonCountries
+          }
+        }
       })
     }
 }

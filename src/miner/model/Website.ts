@@ -11,6 +11,11 @@ export class Website {
     private _imageUrls: string[];
     private _stylesheetUrls: string[];
     private _metaDataDescriptions: string[];
+
+    private _activeCountries: string[];
+
+    private _comingSoonCountries: string[];
+
     constructor(httpResponse:AxiosResponse){
         const cheerioData = cheerio.load(httpResponse.data);
         const host = httpResponse.request.host;
@@ -65,11 +70,43 @@ export class Website {
                 metaDataDescription.push(this.cheerioData(meta).attr('name'));
             }
         });
+
         this._metaDataDescriptions = metaDataDescription;
 
         return this;
     }
 
+    setCountries() {
+        //Coming Soon
+        const activeCountries = [];
+        const comingSoonCountries = [];
+
+        this.cheerioData('h4').map((index, heading)=>{
+            if (this.cheerioData(heading).text().trim() === "International Showtimes Territories"){
+                this.cheerioData(heading).parent().find("ul.lead li").map((index,country) => {
+                    activeCountries.push(this.cheerioData(country).text());
+                })
+            }
+
+            if (this.cheerioData(heading).text().trim() === "Coming Soon"){
+                this.cheerioData(heading).parent().find("ul.lead li").map((index,country) => {
+                    comingSoonCountries.push(this.cheerioData(country).text());
+                })
+            }
+        });
+
+        this._activeCountries = activeCountries;
+        this._comingSoonCountries = comingSoonCountries;
+
+    }
+
+    get activeCountries(): string[] {
+        return this._activeCountries;
+    }
+
+    get comingSoonCountries(): string[] {
+        return this._comingSoonCountries;
+    }
 
     get title(): string {
         return this._title;
